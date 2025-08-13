@@ -2,21 +2,21 @@
 ````markdown
 # Renaksi Laravel App
 
-Aplikasi manajemen **Laporan Renaksi** berbasis Laravel, dengan fitur autentikasi pengguna (register, login, logout) dan CRUD laporan.  
-Database yang digunakan: **Renaksi-DB**
+Aplikasi manajemen Laporan Renaksi berbasis Laravel, dengan fitur autentikasi pengguna (register, login, logout) dan CRUD laporan.  
+Database yang digunakan: Renaksi-DB
 
 ---
 
 ## Fitur
-- **Autentikasi**
+- Autentikasi
   - Registrasi akun baru
   - Login & Logout
-- **Manajemen Laporan Renaksi**
+- Manajemen Laporan Renaksi
   - Tambah laporan baru
   - Edit laporan
   - Hapus laporan
   - Tampilkan laporan berdasarkan kategori (A, B, C, D)
-- Middleware **guest** dan **auth** untuk membatasi akses halaman
+- Middleware guest dan auth untuk membatasi akses halaman
 - Struktur view menggunakan layout `layouts-eg.horizontal`
 - Service `LaporanRenaksiService` untuk pengolahan data per kategori
 
@@ -24,13 +24,13 @@ Database yang digunakan: **Renaksi-DB**
 
 ## Instalasi
 
-1. **Clone repository**
+1. Clone repository
    ```bash
    git clone git@gitlab.com:virgianf/renaksi-klaten.git
    cd renaksi-klaten
 ````
 
-2. **Install dependencies**
+2. Install dependencies
 
    ```bash
    composer install
@@ -38,7 +38,7 @@ Database yang digunakan: **Renaksi-DB**
    npm run dev
    ```
 
-3. **Buat file environment**
+3. Buat file environment
 
    ```bash
    cp .env.example .env
@@ -52,13 +52,13 @@ Database yang digunakan: **Renaksi-DB**
    DB_PASSWORD=
    ```
 
-4. **Generate app key**
+4. Generate app key
 
    ```bash
    php artisan key:generate
    ```
 
-5. **Migrasi database**
+5. Migrasi database
 
    ```bash
    php artisan migrate
@@ -68,18 +68,18 @@ Database yang digunakan: **Renaksi-DB**
 
 ## Struktur Utama
 
-* **Controllers**
+* Controllers
 
   * `AuthController` → Autentikasi pengguna
   * `LaporanRenaksiController` → CRUD Laporan Renaksi
-* **Models**
+* Models
 
   * `User`
   * `LaporanRenaksi`
-* **Routes**
+* Routes
 
   * `web.php` → Routing web dan middleware auth/guest
-* **Services**
+* Services
 
   * `LaporanRenaksiService` → Pengelompokan data berdasarkan kategori
 
