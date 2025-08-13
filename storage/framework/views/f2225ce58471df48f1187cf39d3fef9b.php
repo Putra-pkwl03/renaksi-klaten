@@ -1,0 +1,1 @@
+<?php /**PATH C:\laragon\www\Adminto-Laravel_v2.0\Adminto\resources\views/index.blade.php ENDPATH**/ ?>
