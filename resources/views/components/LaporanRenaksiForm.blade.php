@@ -12,7 +12,6 @@
             @endif
 
             <div class="row g-3">
-                {{-- Unit --}}
                 <div class="col-md-3">
                     <label class="form-label fw-semibold">Unit <span class="text-danger">*</span></label>
                     <select name="unit_id" class="shadow-sm form-select" required>
@@ -25,8 +24,6 @@
                         @endforeach
                     </select>
                 </div>
-
-                {{-- Kategori --}}
                 <div class="col-md-3">
                     <label class="form-label fw-semibold">Kategori <span class="text-danger">*</span></label>
                     <select id="kategoriSelect" name="kategori" class="shadow-sm form-select" required>
@@ -39,15 +36,11 @@
                         @endforeach
                     </select>
                 </div>
-
-                {{-- Sasaran --}}
                 <div class="col-md-5">
                     <label class="form-label fw-semibold">Sasaran</label>
                     <input type="text" name="sasaran" class="shadow-sm form-control"
                            value="{{ old('sasaran', $laporan->sasaran ?? '') }}" required>
                 </div>
-
-                {{-- Indikator --}}
                 <div class="col-md-4">
                     <label class="form-label fw-semibold">Indikator</label>
                     <input type="text" name="indikator" class="shadow-sm form-control"
@@ -56,8 +49,6 @@
             </div>
 
             <hr class="my-4">
-
-            {{-- Target TW --}}
             <div class="row g-3">
                 @foreach (['1','2','3','4'] as $tw)
                     <div class="col-md-3">
@@ -69,8 +60,6 @@
                     </div>
                 @endforeach
             </div>
-
-            {{-- Realisasi TW --}}
             <div class="mt-2 row g-3">
                 @foreach (['1','2','3','4'] as $tw)
                     <div class="col-md-3">
@@ -84,8 +73,6 @@
             </div>
 
             <hr class="my-4">
-
-            {{-- Catatan & Tindak Lanjut --}}
             <div class="mt-3">
                 <label class="form-label fw-semibold">Catatan Hasil Monitoring</label>
                 <textarea name="catatan_hasil_monitoring" class="shadow-sm form-control" rows="2">{{ old('catatan_hasil_monitoring', $laporan->catatan_hasil_monitoring ?? '') }}</textarea>

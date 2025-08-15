@@ -5,7 +5,6 @@
     <div class="card">
         <div class="text-white card-header d-flex justify-content-between align-items-center" style="background-color:#5eb3fd;">
             <h4 class="mb-0">Daftar Kategori</h4>
-            <!-- Tombol Tambah Kategori -->
             <button type="button" class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
                 <i class="bi bi-plus-circle me-1"></i> Tambah Kategori
             </button>

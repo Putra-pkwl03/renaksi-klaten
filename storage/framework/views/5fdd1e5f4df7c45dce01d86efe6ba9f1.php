@@ -5,7 +5,6 @@
     <div class="card">
        <div class="text-white card-header d-flex justify-content-between align-items-center" style="background-color:#5eb3fd;">
         <h4 class="mb-0">Daftar Unit</h4>
-            <!-- Button trigger modal -->
             <button type="button" class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#addUnitModal">
                 <i class="bi bi-plus-circle me-1"></i> Tambah Unit
             </button>
@@ -37,12 +36,9 @@
                             <td class="text-center"><?php echo e($unit->nama_unit); ?></td>
                             <td class="text-center"><?php echo e($unit->tahun); ?></td>
                             <td class="text-center">
-                                <!-- Edit -->
                                 <a href="<?php echo e(route('units.edit', $unit->id)); ?>" class="btn btn-warning btn-sm me-1" title="Edit Unit">
                                     <i class="bi bi-pencil-square"></i>
                                 </a>
-
-                                <!-- Delete -->
                                 <form action="<?php echo e(route('units.destroy', $unit->id)); ?>" method="POST" class="d-inline">
                                     <?php echo csrf_field(); ?>
                                     <?php echo method_field('DELETE'); ?>
@@ -50,8 +46,6 @@
                                         <i class="bi bi-trash"></i>
                                     </button>
                                 </form>
-
-                                <!-- Kategori -->
                                 <a href="<?php echo e(route('categories.index')); ?>" class="btn btn-info btn-sm ms-1" title="Kategori Unit">
                                     <i class="bi bi-tags"></i>
                                 </a>

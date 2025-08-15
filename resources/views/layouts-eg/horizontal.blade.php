@@ -20,7 +20,7 @@ lang="en" data-layout="topnav"
     <!-- ============================================================== -->
      <div class="page-content">
         <div class="page-container">
-            @yield('page_content') <!-- isi spesifik per halaman -->
+            @yield('page_content') 
         </div>
     </div>
 </div>

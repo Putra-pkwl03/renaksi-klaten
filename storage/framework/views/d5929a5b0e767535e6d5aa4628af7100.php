@@ -18,7 +18,7 @@ lang="en" data-layout="topnav"
     <!-- ============================================================== -->
      <div class="page-content">
         <div class="page-container">
-            <?php echo $__env->yieldContent('page_content'); ?> <!-- isi spesifik per halaman -->
+            <?php echo $__env->yieldContent('page_content'); ?> 
         </div>
     </div>
 </div>
