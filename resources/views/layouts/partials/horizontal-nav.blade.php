@@ -20,10 +20,10 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="topnav-apps">
                            <a href="{{ route('laporan-renaksi.index') }}" class="dropdown-item">Laporan Renaksi</a>
+                           <a href="{{ route('units.index') }}" class="dropdown-item">Manage Units</a>
+                           <a href="{{ route('categories.index') }}" class="dropdown-item">Manage Categories</a>
                         </div>
                     </li>
-
-                 
                 </ul>
             </div>
         </nav>

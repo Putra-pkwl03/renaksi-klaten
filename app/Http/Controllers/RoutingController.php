@@ -19,7 +19,7 @@ class RoutingController extends Controller
         $mode = 'list';
         $showActions = false; 
 
-        return view('layouts-eg.horizontal', compact(
+        return view('apps.LaporanRenaksi', compact(
             'laporan',
             'laporanByKategori',
             'capaianTriwulanByKategori',

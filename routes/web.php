@@ -4,6 +4,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RoutingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LaporanRenaksiController;
+use App\Http\Controllers\UnitController;
+use App\Http\Controllers\CategoryController;
 
 // Group: (belum login)
 Route::middleware('guest')->group(function () {
@@ -20,8 +22,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/', [RoutingController::class, 'index'])->name('root');
 
     Route::resource('laporan-renaksi', LaporanRenaksiController::class);
+    Route::resource('units', UnitController::class);
+    Route::resource('categories', CategoryController::class);
 
-    // Catch-all harus paling bawah
+    // Catch-all 
     Route::get('{first}/{second}/{third}', [RoutingController::class, 'thirdLevel'])->name('third');
     Route::get('{first}/{second}', [RoutingController::class, 'secondLevel'])->name('second');
     Route::get('{any}', [RoutingController::class, 'root'])->name('any');

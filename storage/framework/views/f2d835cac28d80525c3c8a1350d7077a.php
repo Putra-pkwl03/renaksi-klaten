@@ -29,21 +29,12 @@
         <?php endif; ?>
 
         <div class="table-responsive">
-            <?php
-                $sections = [
-                    'A' => 'PENCAPAIAN KINERJA SASARAN',
-                    'B' => 'PENCAPAIAN KINERJA PROGRAM',
-                    'C' => 'PENCAPAIAN KINERJA KEGIATAN',
-                    'D' => 'PENCAPAIAN KINERJA SUB KEGIATAN'
-                ];
-            ?>
-
-            <?php $__currentLoopData = $sections; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $kode => $judul): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <table class="table table-bordered table-hover align-middle">
+            <?php $__currentLoopData = $laporanByKategori; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $kategori => $laporans): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <table class="table mb-4 align-middle table-bordered table-hover">
                     <thead>
                         <tr style="background-color:#efd684; font-weight:bold;">
                             <th colspan="<?php echo e($showActions ? 19 : 18); ?>" style="font-size:14px; color: black;">
-                                <?php echo e($kode); ?>. <?php echo e($judul); ?>
+                                <?php echo e($kategori); ?>
 
                             </th>
                         </tr>
@@ -71,17 +62,17 @@
                             <th>TW III</th>
                             <th>TW IV</th>
                             <th style="background-color:#fffd6e;">
-                                Triwulan <span style="color: red;"><?php echo e($capaianTriwulanByKategori[$kode] ?? ''); ?></span>
+                                Triwulan <span style="color: red;"><?php echo e($capaianTriwulanByKategori[$kategori] ?? ''); ?></span>
                             </th>
                             <th style="background-color:#fffd6e;">
-                                Akumulasi S/D Triwulan <span style="color: red;"><?php echo e($capaianTriwulanByKategori[$kode] ?? ''); ?></span>
+                                Akumulasi S/D Triwulan <span style="color: red;"><?php echo e($capaianTriwulanByKategori[$kategori] ?? ''); ?></span>
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $__empty_1 = true; $__currentLoopData = $laporanByKategori[$kode]; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $row): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                        <?php $__empty_1 = true; $__currentLoopData = $laporans; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $row): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                             <tr style="font-size: 11px;">
-                                <td><?php echo e(($laporanByKategori[$kode]->currentPage() - 1) * $laporanByKategori[$kode]->perPage() + $index + 1); ?></td>
+                                <td><?php echo e(($laporans->currentPage() - 1) * $laporans->perPage() + $index + 1); ?></td>
                                 <td style="background-color:#a5d39b;"><?php echo e($row->sasaran); ?></td>
                                 <td style="background-color:#a7d0f3;"><?php echo e($row->indikator); ?></td>
                                 <td style="background-color:#a7d0f3;"><?php echo e($row->target_tw1); ?></td>
@@ -94,6 +85,7 @@
                                 <td style="background-color:#b59cc7;"><?php echo e($row->realisasi_tw4); ?></td>
                                 <td style="background-color:#fffd6e;"><?php echo e($row->persen_capaian); ?>%</td>
                                 <td style="background-color:#fffd6e;"><?php echo e($row->persen_capaian_akumulasi); ?>%</td>
+
                                 <td><?php echo e($row->catatan_hasil_monitoring); ?></td>
                                 <td><?php echo e($row->tindak_lanjut); ?></td>
                                 <?php if($showActions): ?>
@@ -101,7 +93,7 @@
                                         <a href="<?php echo e(route('laporan-renaksi.edit', $row->id)); ?>" class="text-primary me-2" title="Edit">
                                             <i class="bi bi-pencil"></i>
                                         </a>
-                                        <a href="#" class="btn btn-link p-0 m-0 text-danger" title="Delete"
+                                        <a href="#" class="p-0 m-0 btn btn-link text-danger" title="Delete"
                                            data-bs-toggle="modal"
                                            data-bs-target="#deleteModal"
                                            data-url="<?php echo e(route('laporan-renaksi.destroy', $row->id)); ?>">
@@ -118,8 +110,8 @@
                     </tbody>
                 </table>
 
-                <div class="d-flex justify-content-end align-items-center mt-2">
-                    <?php echo e($laporanByKategori[$kode]->links('pagination::bootstrap-5')); ?>
+                <div class="mt-2 d-flex justify-content-end align-items-center">
+                    <?php echo e($laporans->links('pagination::bootstrap-5')); ?>
 
                 </div>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

@@ -16,9 +16,9 @@ lang="en" data-layout="topnav"
     <!-- ============================================================== -->
     <!-- Start Page Content here -->
     <!-- ============================================================== -->
-    <div class="page-content">
+     <div class="page-content">
         <div class="page-container">
-            <?php echo $__env->make('apps.LaporanRenaksi', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+            <?php echo $__env->yieldContent('page_content'); ?> <!-- isi spesifik per halaman -->
         </div>
     </div>
 </div>

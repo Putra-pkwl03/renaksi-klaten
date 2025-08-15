@@ -28,21 +28,12 @@
         @endif
 
         <div class="table-responsive">
-            @php
-                $sections = [
-                    'A' => 'PENCAPAIAN KINERJA SASARAN',
-                    'B' => 'PENCAPAIAN KINERJA PROGRAM',
-                    'C' => 'PENCAPAIAN KINERJA KEGIATAN',
-                    'D' => 'PENCAPAIAN KINERJA SUB KEGIATAN'
-                ];
-            @endphp
-
-            @foreach($sections as $kode => $judul)
-                <table class="table table-bordered table-hover align-middle">
+            @foreach($laporanByKategori as $kategori => $laporans)
+                <table class="table mb-4 align-middle table-bordered table-hover">
                     <thead>
                         <tr style="background-color:#efd684; font-weight:bold;">
                             <th colspan="{{ $showActions ? 19 : 18 }}" style="font-size:14px; color: black;">
-                                {{ $kode }}. {{ $judul }}
+                                {{ $kategori }}
                             </th>
                         </tr>
                         <tr style="text-align:center; font-size: 11px;">
@@ -69,17 +60,17 @@
                             <th>TW III</th>
                             <th>TW IV</th>
                             <th style="background-color:#fffd6e;">
-                                Triwulan <span style="color: red;">{{ $capaianTriwulanByKategori[$kode] ?? '' }}</span>
+                                Triwulan <span style="color: red;">{{ $capaianTriwulanByKategori[$kategori] ?? '' }}</span>
                             </th>
                             <th style="background-color:#fffd6e;">
-                                Akumulasi S/D Triwulan <span style="color: red;">{{ $capaianTriwulanByKategori[$kode] ?? '' }}</span>
+                                Akumulasi S/D Triwulan <span style="color: red;">{{ $capaianTriwulanByKategori[$kategori] ?? '' }}</span>
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($laporanByKategori[$kode] as $index => $row)
+                        @forelse($laporans as $index => $row)
                             <tr style="font-size: 11px;">
-                                <td>{{ ($laporanByKategori[$kode]->currentPage() - 1) * $laporanByKategori[$kode]->perPage() + $index + 1 }}</td>
+                                <td>{{ ($laporans->currentPage() - 1) * $laporans->perPage() + $index + 1 }}</td>
                                 <td style="background-color:#a5d39b;">{{ $row->sasaran }}</td>
                                 <td style="background-color:#a7d0f3;">{{ $row->indikator }}</td>
                                 <td style="background-color:#a7d0f3;">{{ $row->target_tw1 }}</td>
@@ -92,6 +83,7 @@
                                 <td style="background-color:#b59cc7;">{{ $row->realisasi_tw4 }}</td>
                                 <td style="background-color:#fffd6e;">{{ $row->persen_capaian }}%</td>
                                 <td style="background-color:#fffd6e;">{{ $row->persen_capaian_akumulasi }}%</td>
+
                                 <td>{{ $row->catatan_hasil_monitoring }}</td>
                                 <td>{{ $row->tindak_lanjut }}</td>
                                 @if($showActions)
@@ -99,7 +91,7 @@
                                         <a href="{{ route('laporan-renaksi.edit', $row->id) }}" class="text-primary me-2" title="Edit">
                                             <i class="bi bi-pencil"></i>
                                         </a>
-                                        <a href="#" class="btn btn-link p-0 m-0 text-danger" title="Delete"
+                                        <a href="#" class="p-0 m-0 btn btn-link text-danger" title="Delete"
                                            data-bs-toggle="modal"
                                            data-bs-target="#deleteModal"
                                            data-url="{{ route('laporan-renaksi.destroy', $row->id) }}">
@@ -116,8 +108,8 @@
                     </tbody>
                 </table>
 
-                <div class="d-flex justify-content-end align-items-center mt-2">
-                    {{ $laporanByKategori[$kode]->links('pagination::bootstrap-5') }}
+                <div class="mt-2 d-flex justify-content-end align-items-center">
+                    {{ $laporans->links('pagination::bootstrap-5') }}
                 </div>
             @endforeach
         </div>

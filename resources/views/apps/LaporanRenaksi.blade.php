@@ -1,3 +1,6 @@
+@extends('layouts-eg.horizontal')
+
+@section('page_content')
 @if($mode === 'form')
     @include('components.LaporanRenaksiForm')
 @else
@@ -7,6 +10,7 @@
         'showActions' => $showActions
     ])
 @endif
+@endsection
 
 @if($showActions)
     @include('components.ModalHapus')

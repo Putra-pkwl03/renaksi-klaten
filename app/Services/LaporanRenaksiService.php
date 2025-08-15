@@ -1,9 +1,10 @@
 <?php
 
-// app/Services/LaporanRenaksiService.php
 namespace App\Services;
 
 use App\Models\LaporanRenaksi;
+use App\Models\Category;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class LaporanRenaksiService
 {
@@ -12,12 +13,20 @@ class LaporanRenaksiService
         $laporanByKategori = [];
         $capaianTriwulanByKategori = [];
 
-        foreach (['A', 'B', 'C', 'D'] as $kode) {
-            $laporanByKategori[$kode] = LaporanRenaksi::where('kategori', $kode)
-                ->orderBy('created_at', 'desc')
-                ->paginate(3, ['*'], 'page_' . $kode);
+        // Ambil semua kategori dari DB
+        $categories = Category::orderBy('nama_kategori')->get();
 
-            $capaianTriwulanByKategori[$kode] = LaporanRenaksi::where('kategori', $kode)
+        foreach ($categories as $category) {
+            $categoryId = $category->id;
+            $categoryName = $category->nama_kategori;
+
+            // Ambil data laporan per kategori, pakai paginator
+            $laporanByKategori[$categoryName] = LaporanRenaksi::where('category_id', $categoryId)
+                ->orderBy('created_at', 'desc')
+                ->paginate(3, ['*'], 'page_' . $categoryId);
+
+            // Ambil capaian triwulan terakhir untuk kategori ini
+            $capaianTriwulanByKategori[$categoryName] = LaporanRenaksi::where('category_id', $categoryId)
                 ->orderBy('created_at', 'desc')
                 ->value('capaian_triwulan');
         }

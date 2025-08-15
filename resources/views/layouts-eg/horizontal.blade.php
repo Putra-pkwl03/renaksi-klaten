@@ -18,9 +18,9 @@ lang="en" data-layout="topnav"
     <!-- ============================================================== -->
     <!-- Start Page Content here -->
     <!-- ============================================================== -->
-    <div class="page-content">
+     <div class="page-content">
         <div class="page-container">
-            @include('apps.LaporanRenaksi')
+            @yield('page_content') <!-- isi spesifik per halaman -->
         </div>
     </div>
 </div>

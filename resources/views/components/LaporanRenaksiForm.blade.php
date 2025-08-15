@@ -1,10 +1,10 @@
-<div class="card shadow-lg border-0 rounded-4 mt-3">
-    <div class="card-header bg-primary text-white rounded-top-4 py-3">
+<div class="border-0 shadow-lg card rounded-4">
+    <div class="py-3 text-white card-header bg-primary rounded-top-4">
         <h5 class="mb-0">
             {{ isset($laporan->id) ? 'Edit Laporan Renaksi' : 'Tambah Laporan Renaksi' }}
         </h5>
     </div>
-    <div class="card-body p-4">
+    <div class="p-4 card-body">
         <form action="{{ isset($laporan->id) ? route('laporan-renaksi.update', $laporan->id) : route('laporan-renaksi.store') }}" method="POST">
             @csrf
             @if(isset($laporan->id))
@@ -12,24 +12,45 @@
             @endif
 
             <div class="row g-3">
+                {{-- Unit --}}
                 <div class="col-md-3">
-                    <label class="form-label fw-semibold">Kategori <span class="text-danger">*</span></label>
-                    <select id="kategoriSelect" name="kategori" class="form-select shadow-sm" required>
-                        <option value="">-- Pilih --</option>
-                        <option value="A" {{ old('kategori', $laporan->kategori ?? '') == 'A' ? 'selected' : '' }}>Kinerja Sasaran</option>
-                        <option value="B" {{ old('kategori', $laporan->kategori ?? '') == 'B' ? 'selected' : '' }}>Kinerja Program</option>
-                        <option value="C" {{ old('kategori', $laporan->kategori ?? '') == 'C' ? 'selected' : '' }}>Kinerja Kegiatan</option>
-                        <option value="D" {{ old('kategori', $laporan->kategori ?? '') == 'D' ? 'selected' : '' }}>Kinerja Sub Kegiatan</option>
+                    <label class="form-label fw-semibold">Unit <span class="text-danger">*</span></label>
+                    <select name="unit_id" class="shadow-sm form-select" required>
+                        <option value="">-- Pilih Unit --</option>
+                        @foreach($units as $unit)
+                            <option value="{{ $unit->id }}"
+                                {{ old('unit_id', $laporan->unit_id ?? '') == $unit->id ? 'selected' : '' }}>
+                                {{ $unit->nama_unit }}
+                            </option>
+                        @endforeach
                     </select>
                 </div>
+
+                {{-- Kategori --}}
+                <div class="col-md-3">
+                    <label class="form-label fw-semibold">Kategori <span class="text-danger">*</span></label>
+                    <select id="kategoriSelect" name="kategori" class="shadow-sm form-select" required>
+                        <option value="">-- Pilih Kategori --</option>
+                        @foreach($categories as $cat)
+                            <option value="{{ $cat->id }}"
+                                {{ old('kategori', $laporan->category_id ?? '') == $cat->id ? 'selected' : '' }}>
+                                {{ $cat->nama_kategori }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                {{-- Sasaran --}}
                 <div class="col-md-5">
                     <label class="form-label fw-semibold">Sasaran</label>
-                    <input type="text" name="sasaran" class="form-control shadow-sm"
+                    <input type="text" name="sasaran" class="shadow-sm form-control"
                            value="{{ old('sasaran', $laporan->sasaran ?? '') }}" required>
                 </div>
+
+                {{-- Indikator --}}
                 <div class="col-md-4">
                     <label class="form-label fw-semibold">Indikator</label>
-                    <input type="text" name="indikator" class="form-control shadow-sm"
+                    <input type="text" name="indikator" class="shadow-sm form-control"
                            value="{{ old('indikator', $laporan->indikator ?? '') }}">
                 </div>
             </div>
@@ -43,20 +64,20 @@
                         <label class="form-label fw-semibold target-label" data-tw="{{ $tw }}">
                             Target TW {{ $tw }}
                         </label>
-                        <input type="text" name="target_tw{{ $tw }}" class="form-control shadow-sm"
+                        <input type="text" name="target_tw{{ $tw }}" class="shadow-sm form-control"
                                value="{{ old('target_tw'.$tw, $laporan->{'target_tw'.$tw} ?? '') }}">
                     </div>
                 @endforeach
             </div>
 
             {{-- Realisasi TW --}}
-            <div class="row g-3 mt-2">
+            <div class="mt-2 row g-3">
                 @foreach (['1','2','3','4'] as $tw)
                     <div class="col-md-3">
                         <label class="form-label fw-semibold realisasi-label" data-tw="{{ $tw }}">
                             Realisasi TW {{ $tw }}
                         </label>
-                        <input type="text" name="realisasi_tw{{ $tw }}" class="form-control shadow-sm"
+                        <input type="text" name="realisasi_tw{{ $tw }}" class="shadow-sm form-control"
                                value="{{ old('realisasi_tw'.$tw, $laporan->{'realisasi_tw'.$tw} ?? '') }}">
                     </div>
                 @endforeach
@@ -64,37 +85,20 @@
 
             <hr class="my-4">
 
-            <div class="row g-3">
-                <div class="col-md-4">
-                    <label class="form-label fw-semibold">Capaian Triwulan</label>
-                    <input type="text" name="capaian_triwulan" class="form-control shadow-sm"
-                           value="{{ old('capaian_triwulan', $laporan->capaian_triwulan ?? '') }}">
-                </div>
-                <div class="col-md-4">
-                    <label class="form-label fw-semibold">% Capaian</label>
-                    <input type="number" step="0.01" name="persen_capaian" class="form-control shadow-sm"
-                           value="{{ old('persen_capaian', $laporan->persen_capaian ?? '') }}">
-                </div>
-                <div class="col-md-4">
-                    <label class="form-label fw-semibold">% Capaian Akumulasi</label>
-                    <input type="number" step="0.01" name="persen_capaian_akumulasi" class="form-control shadow-sm"
-                           value="{{ old('persen_capaian_akumulasi', $laporan->persen_capaian_akumulasi ?? '') }}">
-                </div>
-            </div>
-
+            {{-- Catatan & Tindak Lanjut --}}
             <div class="mt-3">
                 <label class="form-label fw-semibold">Catatan Hasil Monitoring</label>
-                <textarea name="catatan_hasil_monitoring" class="form-control shadow-sm" rows="2">{{ old('catatan_hasil_monitoring', $laporan->catatan_hasil_monitoring ?? '') }}</textarea>
+                <textarea name="catatan_hasil_monitoring" class="shadow-sm form-control" rows="2">{{ old('catatan_hasil_monitoring', $laporan->catatan_hasil_monitoring ?? '') }}</textarea>
             </div>
 
             <div class="mt-3">
                 <label class="form-label fw-semibold">Tindak Lanjut</label>
-                <textarea name="tindak_lanjut" class="form-control shadow-sm" rows="2">{{ old('tindak_lanjut', $laporan->tindak_lanjut ?? '') }}</textarea>
+                <textarea name="tindak_lanjut" class="shadow-sm form-control" rows="2">{{ old('tindak_lanjut', $laporan->tindak_lanjut ?? '') }}</textarea>
             </div>
 
-            <div class="d-flex justify-content-end gap-2 mt-4">
-                <a href="{{ route('laporan-renaksi.index') }}" class="btn btn-light border shadow-sm px-4">Batal</a>
-                <button type="submit" class="btn btn-primary shadow-sm px-4">
+            <div class="gap-2 mt-4 d-flex justify-content-end">
+                <a href="{{ route('laporan-renaksi.index') }}" class="px-4 border shadow-sm btn btn-light">Batal</a>
+                <button type="submit" class="px-4 shadow-sm btn btn-primary">
                     <i class="bi bi-save me-1"></i> Simpan
                 </button>
             </div>
@@ -102,7 +106,6 @@
     </div>
 </div>
 
-{{-- Script dinamis --}}
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const kategoriSelect = document.getElementById('kategoriSelect');
@@ -125,6 +128,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     kategoriSelect.addEventListener('change', updateLabels);
-    updateLabels(); // jalankan saat load
+    updateLabels();
 });
 </script>
