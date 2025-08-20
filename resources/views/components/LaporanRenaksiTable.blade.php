@@ -88,10 +88,10 @@
                                 <td>{{ $row->tindak_lanjut }}</td>
                                 @if($showActions)
                                     <td class="text-center">
-                                        <a href="{{ route('laporan-renaksi.edit', $row->id) }}" class="text-primary me-2" title="Edit">
+                                        <a href="{{ route('laporan-renaksi.edit', $row->id) }}" class="btn btn-warning btn-sm me-1 mb-1" title="Edit">
                                             <i class="bi bi-pencil"></i>
                                         </a>
-                                        <a href="#" class="p-0 m-0 btn btn-link text-danger" title="Delete"
+                                        <a href="#" class="btn btn-danger btn-sm me-1" title="Delete"
                                            data-bs-toggle="modal"
                                            data-bs-target="#deleteModal"
                                            data-url="{{ route('laporan-renaksi.destroy', $row->id) }}">

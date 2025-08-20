@@ -14,9 +14,12 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::with('unit')->latest()->get();
+        $units = Unit::all(); 
         $topbarTitle = 'Daftar Kategori'; 
-        return view('apps.category', compact('categories', 'topbarTitle'));
+
+        return view('apps.category', compact('categories', 'units', 'topbarTitle'));
     }
+
 
 
     /**

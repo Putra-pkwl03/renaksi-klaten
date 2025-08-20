@@ -11,11 +11,19 @@ class AuthController extends Controller
 {
     public function showRegister()
     {
+        if (!Auth::check()) {
+            return redirect('/auth/login')->with('error', 'Harus login dulu untuk mendaftarkan user baru.');
+        }
+
         return view('auth.register');
     }
 
     public function register(Request $request)
     {
+        if (!Auth::check()) {
+            return redirect('/auth/login')->with('error', 'Harus login dulu untuk mendaftarkan user baru.');
+        }
+
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users',
@@ -28,7 +36,7 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        return redirect('/auth/login')->with('success', 'Register berhasil, silakan login.');
+        return redirect()->back()->with('success', 'User berhasil didaftarkan.');
     }
 
     public function showLogin()
@@ -41,12 +49,66 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            // return redirect()->route('root');
             return redirect()->intended('/');
-
         }
 
         return back()->withErrors(['email' => 'Email atau password salah.']);
+    }
+
+
+    public function listUsers()
+    {
+        if (!Auth::check()) {
+            return redirect('/auth/login')->with('error', 'Harus login dulu untuk melihat data user.');
+        }
+
+        $users = User::all();
+
+        return view('apps.ManageUsers', [
+            'users' => $users,
+            'topbarTitle' => 'Manage Users'
+        ]);
+    }
+
+    public function updateUser(Request $request, $id)
+    {
+        if (!Auth::check()) {
+            return redirect('/auth/login')->with('error', 'Harus login dulu.');
+        }
+
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,' . $id,
+            'password' => 'nullable|min:6|confirmed',
+        ]);
+
+        $user = User::findOrFail($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->save();
+
+        return redirect()->back()->with('success', 'User berhasil diperbarui.');
+    }
+
+    public function deleteUser($id)
+    {
+        if (!Auth::check()) {
+            return redirect('/auth/login')->with('error', 'Harus login dulu.');
+        }
+
+        $user = User::findOrFail($id);
+        if ($user->id == Auth::id()) {
+            return redirect()->back()->with('error', 'Tidak bisa menghapus akun yang sedang login.');
+        }
+
+        $user->delete();
+
+        return redirect()->back()->with('success', 'User berhasil dihapus.');
     }
 
     public function logout()

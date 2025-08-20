@@ -1,6 +1,7 @@
 <div class="border-0 shadow-lg card rounded-4">
-    <div class="py-3 text-white card-header bg-primary rounded-top-4">
-        <h5 class="mb-0">
+   <div class="py-3 text-white card-header rounded-top-4 <?php echo e(isset($laporan->id) ? 'bg-warning' : 'bg-primary'); ?>">
+        <h5 class="mb-0  ps-1">
+            <i class="bi <?php echo e(isset($laporan->id) ? 'bi-pencil-square' : 'bi-plus-circle'); ?> me-2"></i>
             <?php echo e(isset($laporan->id) ? 'Edit Laporan Renaksi' : 'Tambah Laporan Renaksi'); ?>
 
         </h5>
@@ -11,56 +12,53 @@
             <?php if(isset($laporan->id)): ?>
                 <?php echo method_field('PUT'); ?>
             <?php endif; ?>
-
             <div class="row g-3">
-                
-                <div class="col-md-3">
-                    <label class="form-label fw-semibold">Unit <span class="text-danger">*</span></label>
-                    <select name="unit_id" class="shadow-sm form-select" required>
-                        <option value="">-- Pilih Unit --</option>
-                        <?php $__currentLoopData = $units; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $unit): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <option value="<?php echo e($unit->id); ?>"
-                                <?php echo e(old('unit_id', $laporan->unit_id ?? '') == $unit->id ? 'selected' : ''); ?>>
-                                <?php echo e($unit->nama_unit); ?>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Unit <span class="text-danger">*</span></label>
+                        <select name="unit_id" class="shadow-sm form-select" required>
+                            <option value="">-- Pilih Unit --</option>
+                            <?php $__currentLoopData = $units; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $unit): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($unit->id); ?>"
+                                    <?php echo e(old('unit_id', $laporan->unit_id ?? '') == $unit->id ? 'selected' : ''); ?>>
+                                    <?php echo e($unit->nama_unit); ?>
 
-                            </option>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                    </select>
+                                </option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Kategori <span class="text-danger">*</span></label>
+                        <select id="kategoriSelect" name="kategori" class="shadow-sm form-select" required>
+                            <option value="">-- Pilih Kategori --</option>
+                            <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($cat->id); ?>"
+                                    <?php echo e(old('kategori', $laporan->category_id ?? '') == $cat->id ? 'selected' : ''); ?>>
+                                    <?php echo e($cat->nama_kategori); ?>
+
+                                </option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        </select>
+                    </div>
                 </div>
 
-                
-                <div class="col-md-3">
-                    <label class="form-label fw-semibold">Kategori <span class="text-danger">*</span></label>
-                    <select id="kategoriSelect" name="kategori" class="shadow-sm form-select" required>
-                        <option value="">-- Pilih Kategori --</option>
-                        <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <option value="<?php echo e($cat->id); ?>"
-                                <?php echo e(old('kategori', $laporan->category_id ?? '') == $cat->id ? 'selected' : ''); ?>>
-                                <?php echo e($cat->nama_kategori); ?>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Sasaran</label>
+                        <input type="text" name="sasaran" class="shadow-sm form-control"
+                               value="<?php echo e(old('sasaran', $laporan->sasaran ?? '')); ?>" required>
+                    </div>
 
-                            </option>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                    </select>
-                </div>
-
-                
-                <div class="col-md-5">
-                    <label class="form-label fw-semibold">Sasaran</label>
-                    <input type="text" name="sasaran" class="shadow-sm form-control"
-                           value="<?php echo e(old('sasaran', $laporan->sasaran ?? '')); ?>" required>
-                </div>
-
-                
-                <div class="col-md-4">
-                    <label class="form-label fw-semibold">Indikator</label>
-                    <input type="text" name="indikator" class="shadow-sm form-control"
-                           value="<?php echo e(old('indikator', $laporan->indikator ?? '')); ?>">
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Indikator</label>
+                        <input type="text" name="indikator" class="shadow-sm form-control"
+                               value="<?php echo e(old('indikator', $laporan->indikator ?? '')); ?>">
+                    </div>
                 </div>
             </div>
 
             <hr class="my-4">
-
-            
             <div class="row g-3">
                 <?php $__currentLoopData = ['1','2','3','4']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tw): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <div class="col-md-3">
@@ -73,8 +71,6 @@
                     </div>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </div>
-
-            
             <div class="mt-2 row g-3">
                 <?php $__currentLoopData = ['1','2','3','4']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tw): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <div class="col-md-3">
@@ -89,22 +85,23 @@
             </div>
 
             <hr class="my-4">
-
-            
             <div class="mt-3">
                 <label class="form-label fw-semibold">Catatan Hasil Monitoring</label>
                 <textarea name="catatan_hasil_monitoring" class="shadow-sm form-control" rows="2"><?php echo e(old('catatan_hasil_monitoring', $laporan->catatan_hasil_monitoring ?? '')); ?></textarea>
             </div>
-
             <div class="mt-3">
                 <label class="form-label fw-semibold">Tindak Lanjut</label>
                 <textarea name="tindak_lanjut" class="shadow-sm form-control" rows="2"><?php echo e(old('tindak_lanjut', $laporan->tindak_lanjut ?? '')); ?></textarea>
             </div>
-
             <div class="gap-2 mt-4 d-flex justify-content-end">
-                <a href="<?php echo e(route('laporan-renaksi.index')); ?>" class="px-4 border shadow-sm btn btn-light">Batal</a>
-                <button type="submit" class="px-4 shadow-sm btn btn-primary">
-                    <i class="bi bi-save me-1"></i> Simpan
+                <a href="<?php echo e(route('laporan-renaksi.index')); ?>" class="px-2 border shadow-sm btn btn-light">
+                    <i class="bi bi-x-circle me-1"></i>Batal
+                </a>
+                <button type="submit" 
+                        class="px-2 shadow-sm btn <?php echo e(isset($laporan->id) ? 'btn-warning' : 'btn-primary'); ?>">
+                    <i class="bi <?php echo e(isset($laporan->id) ? 'bi-pencil-square' : 'bi-save'); ?> me-1"></i>
+                    <?php echo e(isset($laporan->id) ? 'Update' : 'Save'); ?>
+
                 </button>
             </div>
         </form>

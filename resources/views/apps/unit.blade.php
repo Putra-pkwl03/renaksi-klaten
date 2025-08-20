@@ -4,7 +4,7 @@
 <div class="container-fluid">
     <div class="card">
        <div class="text-white card-header d-flex justify-content-between align-items-center" style="background-color:#5eb3fd;">
-        <h4 class="mb-0">Daftar Unit</h4>
+        <h4 class="mb-0">{{ $topbarTitle }}</h4>
             <button type="button" class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#addUnitModal">
                 <i class="bi bi-plus-circle me-1"></i> Tambah Unit
             </button>
@@ -35,21 +35,30 @@
                             <td class="text-center">{{ $unit->nama_unit }}</td>
                             <td class="text-center">{{ $unit->tahun }}</td>
                             <td class="text-center">
-                                <a href="{{ route('units.edit', $unit->id) }}" class="btn btn-warning btn-sm me-1" title="Edit Unit">
+                                <!-- Tombol Edit -->
+                                <button class="btn btn-warning btn-sm me-1"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#editUnitModal{{ $unit->id }}">
                                     <i class="bi bi-pencil-square"></i>
-                                </a>
-                                <form action="{{ route('units.destroy', $unit->id) }}" method="POST" class="d-inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn btn-danger btn-sm" onclick="return confirm('Hapus unit ini?')" title="Hapus Unit">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </form>
+                                </button>
+
+                                <!-- Tombol Delete -->
+                                <button class="btn btn-danger btn-sm"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#deleteUnitModal{{ $unit->id }}">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+
+                                <!-- Tombol ke kategori -->
                                 <a href="{{ route('categories.index') }}" class="btn btn-info btn-sm ms-1" title="Kategori Unit">
                                     <i class="bi bi-tags"></i>
                                 </a>
                             </td>
                         </tr>
+
+                        {{-- Modal untuk edit & delete tiap unit --}}
+                        @include('components.modal-edit-unit', ['unit' => $unit])
+                        @include('components.modal-delete-unit', ['unit' => $unit])
                         @empty
                         <tr>
                             <td colspan="4" class="text-center text-muted">Belum ada data unit.</td>
@@ -62,5 +71,6 @@
     </div>
 </div>
 
+{{-- Modal Tambah Unit --}}
 @include('components.UnitsForm')
 @endsection

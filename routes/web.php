@@ -12,14 +12,20 @@ Route::middleware('guest')->group(function () {
     Route::get('/auth/login', [AuthController::class, 'showLogin'])->name('login');
     Route::post('/auth/login', [AuthController::class, 'login']);
 
-    Route::get('/auth/register', [AuthController::class, 'showRegister']);
-    Route::post('/auth/register', [AuthController::class, 'register']);
 });
 
 // Group: user yg sudah login
 Route::middleware('auth')->group(function () {
     Route::post('/auth/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/', [RoutingController::class, 'index'])->name('root');
+
+    
+    Route::get('/auth/register', [AuthController::class, 'showRegister'])->name('auth.showRegister');
+    Route::post('/auth/register', [AuthController::class, 'register'])->name('auth.register');
+    Route::get('/users', [AuthController::class, 'listUsers'])->name('auth.listUsers');
+    Route::post('/users/{id}/update', [AuthController::class, 'updateUser'])->name('users.update');
+    Route::delete('/users/{id}', [AuthController::class, 'deleteUser'])->name('users.delete');
+
 
     Route::resource('laporan-renaksi', LaporanRenaksiController::class);
     Route::resource('units', UnitController::class);

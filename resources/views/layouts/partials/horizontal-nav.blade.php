@@ -22,6 +22,7 @@
                            <a href="{{ route('laporan-renaksi.index') }}" class="dropdown-item">Laporan Renaksi</a>
                            <a href="{{ route('units.index') }}" class="dropdown-item">Manage Units</a>
                            <a href="{{ route('categories.index') }}" class="dropdown-item">Manage Categories</a>
+                          <a href="{{ route('auth.listUsers') }}" class="dropdown-item">Manage User</a>
                         </div>
                     </li>
                 </ul>

@@ -4,8 +4,7 @@
 <div class="container-fluid">
     <div class="card">
         <div class="text-white card-header d-flex justify-content-between align-items-center" style="background-color:#5eb3fd;">
-            <h4 class="mb-0">Daftar Kategori</h4>
-            <!-- Tombol Tambah Kategori -->
+            <h4 class="mb-0"><?php echo e($topbarTitle); ?></h4>
             <button type="button" class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
                 <i class="bi bi-plus-circle me-1"></i> Tambah Kategori
             </button>
@@ -37,18 +36,24 @@
                                 <td class="text-center"><?php echo e($category->nama_kategori); ?></td>
                                 <td class="text-center"><?php echo e($category->unit->nama_unit ?? '-'); ?></td>
                                 <td class="text-center">
-                                    <a href="<?php echo e(route('categories.edit', $category->id)); ?>" class="btn btn-warning btn-sm me-1" title="Edit Kategori">
+                                
+                                    <button class="btn btn-warning btn-sm me-1" 
+                                            data-bs-toggle="modal" 
+                                            data-bs-target="#editCategoryModal<?php echo e($category->id); ?>">
                                         <i class="bi bi-pencil-square"></i>
-                                    </a>
-                                    <form action="<?php echo e(route('categories.destroy', $category->id)); ?>" method="POST" class="d-inline">
-                                        <?php echo csrf_field(); ?>
-                                        <?php echo method_field('DELETE'); ?>
-                                        <button class="btn btn-danger btn-sm" onclick="return confirm('Hapus kategori ini?')" title="Hapus Kategori">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
-                                    </form>
+                                    </button>
+
+                                    <button class="btn btn-danger btn-sm" 
+                                            data-bs-toggle="modal" 
+                                            data-bs-target="#deleteCategoryModal<?php echo e($category->id); ?>">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
                                 </td>
                             </tr>
+
+                            
+                            <?php echo $__env->make('components.modal-edit-category', ['category' => $category, 'units' => $units], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                            <?php echo $__env->make('components.modal-delete-category', ['category' => $category], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                             <tr>
                                 <td colspan="4" class="text-center text-muted">Belum ada data kategori.</td>
@@ -61,7 +66,8 @@
     </div>
 </div>
 
-<?php echo $__env->make('components.CategoryForm', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+
+<?php echo $__env->make('components.CategoryForm', ['units' => $units], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts-eg.horizontal', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\Adminto-Laravel_v2.0\Adminto\resources\views/apps/category.blade.php ENDPATH**/ ?>

@@ -22,6 +22,7 @@
                            <a href="<?php echo e(route('laporan-renaksi.index')); ?>" class="dropdown-item">Laporan Renaksi</a>
                            <a href="<?php echo e(route('units.index')); ?>" class="dropdown-item">Manage Units</a>
                            <a href="<?php echo e(route('categories.index')); ?>" class="dropdown-item">Manage Categories</a>
+                          <a href="<?php echo e(route('auth.listUsers')); ?>" class="dropdown-item">Manage User</a>
                         </div>
                     </li>
                 </ul>

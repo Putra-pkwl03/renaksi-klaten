@@ -4,7 +4,7 @@
 <div class="container-fluid">
     <div class="card">
         <div class="text-white card-header d-flex justify-content-between align-items-center" style="background-color:#5eb3fd;">
-            <h4 class="mb-0">Daftar Kategori</h4>
+            <h4 class="mb-0">{{ $topbarTitle }}</h4>
             <button type="button" class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
                 <i class="bi bi-plus-circle me-1"></i> Tambah Kategori
             </button>
@@ -35,18 +35,24 @@
                                 <td class="text-center">{{ $category->nama_kategori }}</td>
                                 <td class="text-center">{{ $category->unit->nama_unit ?? '-' }}</td>
                                 <td class="text-center">
-                                    <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-warning btn-sm me-1" title="Edit Kategori">
+                                
+                                    <button class="btn btn-warning btn-sm me-1" 
+                                            data-bs-toggle="modal" 
+                                            data-bs-target="#editCategoryModal{{ $category->id }}">
                                         <i class="bi bi-pencil-square"></i>
-                                    </a>
-                                    <form action="{{ route('categories.destroy', $category->id) }}" method="POST" class="d-inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-danger btn-sm" onclick="return confirm('Hapus kategori ini?')" title="Hapus Kategori">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
-                                    </form>
+                                    </button>
+
+                                    <button class="btn btn-danger btn-sm" 
+                                            data-bs-toggle="modal" 
+                                            data-bs-target="#deleteCategoryModal{{ $category->id }}">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
                                 </td>
                             </tr>
+
+                            {{-- Modal untuk Edit & Delete tiap kategori --}}
+                            @include('components.modal-edit-category', ['category' => $category, 'units' => $units])
+                            @include('components.modal-delete-category', ['category' => $category])
                         @empty
                             <tr>
                                 <td colspan="4" class="text-center text-muted">Belum ada data kategori.</td>
@@ -59,5 +65,6 @@
     </div>
 </div>
 
-@include('components.CategoryForm')
+{{-- Modal Tambah Kategori --}}
+@include('components.CategoryForm', ['units' => $units])
 @endsection

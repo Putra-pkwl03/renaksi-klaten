@@ -44,43 +44,32 @@
         </div>
 
         <div class="d-flex align-items-center gap-2">
-            <!-- Light/Dark Mode Button -->
-            <div class="topbar-item d-none d-sm-flex">
-                <button class="topbar-link" id="light-dark-mode" type="button">
-                    <i class="ri-moon-line light-mode-icon fs-22"></i>
-                    <i class="ri-sun-line dark-mode-icon fs-22"></i>
-                </button>
-            </div>
-
             <!-- User Dropdown -->
             <div class="topbar-item nav-user">
                 <div class="dropdown">
-                    <a class="topbar-link dropdown-toggle drop-arrow-none px-2" data-bs-toggle="dropdown"
+                   <a class="topbar-link dropdown-toggle drop-arrow-none px-2" data-bs-toggle="dropdown"
                         data-bs-offset="0,25" type="button" aria-haspopup="false" aria-expanded="false">
-                        <img src="/images/users/avatar-1.jpg" width="32" class="rounded-circle me-lg-2 d-flex"
-                            alt="user-image">
-                        <span class="d-lg-flex flex-column gap-1 d-none">
-                            <h5 class="my-0">Nowak Helme</h5>
-                        </span>
-                        <i class="ri-arrow-down-s-line d-none d-lg-block align-middle ms-1"></i>
-                    </a>
+                            <img src="/images/users/avatar-1.jpg" width="32" class="rounded-circle me-lg-2 d-flex"
+                                alt="user-image">
+                            <span class="d-lg-flex flex-column gap-1 d-none">
+                                <h5 class="my-0"><?php echo e(auth()->user()->name); ?></h5>
+                            </span>
+                            <i class="ri-arrow-down-s-line d-none d-lg-block align-middle ms-1"></i>
+                        </a>
+
                     <div class="dropdown-menu dropdown-menu-end">
                         <!-- item-->
                         <div class="dropdown-header noti-title">
                             <h6 class="text-overflow m-0">Welcome !</h6>
                         </div>
 
-                        <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item">
+                       <a href="#" 
+                            class="dropdown-item" 
+                            data-bs-toggle="modal" 
+                            data-bs-target="#editUserModal<?php echo e(auth()->user()->id); ?>">
                             <i class="ri-account-circle-line me-1 fs-16 align-middle"></i>
                             <span class="align-middle">My Account</span>
-                        </a>
-
-                        <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item">
-                            <i class="ri-settings-2-line me-1 fs-16 align-middle"></i>
-                            <span class="align-middle">Settings</span>
-                        </a>
+                            </a>
 
                         <div class="dropdown-divider"></div>
 

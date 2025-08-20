@@ -1,6 +1,7 @@
 <div class="border-0 shadow-lg card rounded-4">
-    <div class="py-3 text-white card-header bg-primary rounded-top-4">
-        <h5 class="mb-0">
+   <div class="py-3 text-white card-header rounded-top-4 {{ isset($laporan->id) ? 'bg-warning' : 'bg-primary' }}">
+        <h5 class="mb-0  ps-1">
+            <i class="bi {{ isset($laporan->id) ? 'bi-pencil-square' : 'bi-plus-circle' }} me-2"></i>
             {{ isset($laporan->id) ? 'Edit Laporan Renaksi' : 'Tambah Laporan Renaksi' }}
         </h5>
     </div>
@@ -10,41 +11,47 @@
             @if(isset($laporan->id))
                 @method('PUT')
             @endif
-
             <div class="row g-3">
-                <div class="col-md-3">
-                    <label class="form-label fw-semibold">Unit <span class="text-danger">*</span></label>
-                    <select name="unit_id" class="shadow-sm form-select" required>
-                        <option value="">-- Pilih Unit --</option>
-                        @foreach($units as $unit)
-                            <option value="{{ $unit->id }}"
-                                {{ old('unit_id', $laporan->unit_id ?? '') == $unit->id ? 'selected' : '' }}>
-                                {{ $unit->nama_unit }}
-                            </option>
-                        @endforeach
-                    </select>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Unit <span class="text-danger">*</span></label>
+                        <select name="unit_id" class="shadow-sm form-select" required>
+                            <option value="">-- Pilih Unit --</option>
+                            @foreach($units as $unit)
+                                <option value="{{ $unit->id }}"
+                                    {{ old('unit_id', $laporan->unit_id ?? '') == $unit->id ? 'selected' : '' }}>
+                                    {{ $unit->nama_unit }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Kategori <span class="text-danger">*</span></label>
+                        <select id="kategoriSelect" name="kategori" class="shadow-sm form-select" required>
+                            <option value="">-- Pilih Kategori --</option>
+                            @foreach($categories as $cat)
+                                <option value="{{ $cat->id }}"
+                                    {{ old('kategori', $laporan->category_id ?? '') == $cat->id ? 'selected' : '' }}>
+                                    {{ $cat->nama_kategori }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
-                <div class="col-md-3">
-                    <label class="form-label fw-semibold">Kategori <span class="text-danger">*</span></label>
-                    <select id="kategoriSelect" name="kategori" class="shadow-sm form-select" required>
-                        <option value="">-- Pilih Kategori --</option>
-                        @foreach($categories as $cat)
-                            <option value="{{ $cat->id }}"
-                                {{ old('kategori', $laporan->category_id ?? '') == $cat->id ? 'selected' : '' }}>
-                                {{ $cat->nama_kategori }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="col-md-5">
-                    <label class="form-label fw-semibold">Sasaran</label>
-                    <input type="text" name="sasaran" class="shadow-sm form-control"
-                           value="{{ old('sasaran', $laporan->sasaran ?? '') }}" required>
-                </div>
-                <div class="col-md-4">
-                    <label class="form-label fw-semibold">Indikator</label>
-                    <input type="text" name="indikator" class="shadow-sm form-control"
-                           value="{{ old('indikator', $laporan->indikator ?? '') }}">
+
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Sasaran</label>
+                        <input type="text" name="sasaran" class="shadow-sm form-control"
+                               value="{{ old('sasaran', $laporan->sasaran ?? '') }}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Indikator</label>
+                        <input type="text" name="indikator" class="shadow-sm form-control"
+                               value="{{ old('indikator', $laporan->indikator ?? '') }}">
+                    </div>
                 </div>
             </div>
 
@@ -77,16 +84,18 @@
                 <label class="form-label fw-semibold">Catatan Hasil Monitoring</label>
                 <textarea name="catatan_hasil_monitoring" class="shadow-sm form-control" rows="2">{{ old('catatan_hasil_monitoring', $laporan->catatan_hasil_monitoring ?? '') }}</textarea>
             </div>
-
             <div class="mt-3">
                 <label class="form-label fw-semibold">Tindak Lanjut</label>
                 <textarea name="tindak_lanjut" class="shadow-sm form-control" rows="2">{{ old('tindak_lanjut', $laporan->tindak_lanjut ?? '') }}</textarea>
             </div>
-
             <div class="gap-2 mt-4 d-flex justify-content-end">
-                <a href="{{ route('laporan-renaksi.index') }}" class="px-4 border shadow-sm btn btn-light">Batal</a>
-                <button type="submit" class="px-4 shadow-sm btn btn-primary">
-                    <i class="bi bi-save me-1"></i> Simpan
+                <a href="{{ route('laporan-renaksi.index') }}" class="px-2 border shadow-sm btn btn-light">
+                    <i class="bi bi-x-circle me-1"></i>Batal
+                </a>
+                <button type="submit" 
+                        class="px-2 shadow-sm btn {{ isset($laporan->id) ? 'btn-warning' : 'btn-primary' }}">
+                    <i class="bi {{ isset($laporan->id) ? 'bi-pencil-square' : 'bi-save' }} me-1"></i>
+                    {{ isset($laporan->id) ? 'Update' : 'Save' }}
                 </button>
             </div>
         </form>
